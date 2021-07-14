@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from django.db.models import Count
 from rest_framework import serializers
 
 from advertisements.models import Advertisement
@@ -34,10 +33,12 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         creator_id = validated_data['creator'].id
 
         status_open = Advertisement.objects.filter(
-            creator_id=creator_id
-        ).annotate(Count('status')).filter(status='OPEN')
+            creator_id=creator_id,
+            status='OPEN'
+        ).count()
 
-        if len(status_open) == 10:
+        print(status_open)
+        if status_open == 10:
             raise serializers.ValidationError("Слишком много окрытых объяалений")
 
         return super().create(validated_data)

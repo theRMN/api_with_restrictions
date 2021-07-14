@@ -15,7 +15,7 @@ class AdvertisementViewSet(ModelViewSet):
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    search_fields = ['creator__id', 'status']
+    search_fields = ['creator__id']
     filterset_class = AdvertisementFilter
 
     def get_permissions(self):
